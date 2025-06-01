@@ -1,13 +1,15 @@
 import {
 	type App,
 	type Editor,
-	MarkdownView,
+	type MarkdownView,
 	Modal,
 	Notice,
 	Plugin,
 	PluginSettingTab,
 	Setting,
 } from "obsidian";
+
+import { DateTime } from "luxon";
 
 // Remember to rename these classes and interfaces!
 
@@ -24,7 +26,24 @@ export default class MyPlugin extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
-
+		this.addCommand({
+			id: "insert-timestamp",
+			name: "Insert timestamp",
+			editorCallback: (editor: Editor, view: MarkdownView) => {
+				// generate a timestamp in the format <2025-06-01 Sat 09:58>
+				// https://moment.github.io/luxon/#/formatting?id=table-of-tokens
+				const timestamp = DateTime.now().toFormat(
+					"<yyyy-MM-dd EEE HH:mm>"
+				);
+				const cursor = editor.getCursor();
+				editor.replaceRange(timestamp, cursor);
+				editor.setCursor(
+					editor.offsetToPos(
+						editor.posToOffset(cursor) + timestamp.length
+					)
+				);
+			},
+		});
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new SampleSettingTab(this.app, this));
 
