@@ -50,10 +50,11 @@ export default class MyPlugin extends Plugin {
 		this.addSettingTab(new SampleSettingTab(this.app, this));
 
 		this.registerMarkdownPostProcessor((el, ctx) => {
+			// https://orgmode.org/manual/Timestamps.html
 			// Regex to match <2025-06-01 Sat 09:58> or &lt;2025-06-01 Sat 09:58&gt;
 			// `(?:...` is a non-capturing group, so it won't be included in the match result.
 			const regex =
-				/(?:<|&lt;)(\d{4}-\d{2}-\d{2} \w{3}) (\d{2}:\d{2})(?:>|&gt;)/g;
+				/(?:<|&lt;)(\d{4}-\d{2}-\d{2} \w{3}) (\d{2}:\d{2}(?:-\d{2}:\d{2})?)(?:>|&gt;)/g;
 
 			for (const node of Array.from(
 				el.querySelectorAll("span, p, li, h1, h2, h3, h4, h5, h6")
