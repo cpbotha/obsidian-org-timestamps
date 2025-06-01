@@ -1,6 +1,6 @@
-# Obsidian plugin: AI Chat as Markdown
+# Obsidian plugin: Org timestamps
 
-AI Chat as Markdown lets GPT-4 Omni / Claude 3.5 talk directly into your Obsidian Markdown notes.
+Render pretty org-mode(rn) timestamps in Obsidian
 
 ## Features
 
