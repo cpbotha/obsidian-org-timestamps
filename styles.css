@@ -18,11 +18,11 @@ obsidian-org-timestamps relies on this CSS styling
 }
 
 .org-timestamp-time {
-	background: #555;
+	background: #666;
 	color: #fff;
 	border-radius: 2px;
 	padding: 0px 2px;
 	margin: 0px;
-	font-weight: 600;
+	font-weight: 500;
 	font-family: inherit;
 }
