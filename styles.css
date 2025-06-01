@@ -1,0 +1,28 @@
+/*
+
+obsidian-org-timestamps relies on this CSS styling
+
+*/
+
+.org-timestamp {
+	background: #ededed;
+	border-radius: 2px;
+	/* top and bottom 0px so we don't add extra height, left and right 2px */
+	padding: 0px 2px;
+	display: inline-block;
+	margin: 0px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+	font-size: 1em;
+	font-family: inherit;
+	font-weight: 300;
+}
+
+.org-timestamp-time {
+	background: #555;
+	color: #fff;
+	border-radius: 2px;
+	padding: 0px 2px;
+	margin: 0px;
+	font-weight: 600;
+	font-family: inherit;
+}
