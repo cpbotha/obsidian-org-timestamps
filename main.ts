@@ -9,7 +9,8 @@ import {
 	Setting,
 } from "obsidian";
 
-import { DateTime } from "luxon";
+// with dayjs main.js is 48K vs with luxon it's 780K !
+import dayjs from "dayjs";
 
 // Remember to rename these classes and interfaces!
 
@@ -32,9 +33,10 @@ export default class MyPlugin extends Plugin {
 			editorCallback: (editor: Editor, view: MarkdownView) => {
 				// generate a timestamp in the format <2025-06-01 Sat 09:58>
 				// https://moment.github.io/luxon/#/formatting?id=table-of-tokens
-				const timestamp = DateTime.now().toFormat(
-					"<yyyy-MM-dd EEE HH:mm>"
-				);
+				// const timestamp = DateTime.now().toFormat(
+				// 	"<yyyy-MM-dd EEE HH:mm>"
+				// );
+				const timestamp = dayjs().format("<YYYY-MM-DD ddd HH:mm>");
 				const cursor = editor.getCursor();
 				editor.replaceRange(timestamp, cursor);
 				editor.setCursor(
