@@ -26,3 +26,16 @@ obsidian-org-timestamps relies on this CSS styling
 	font-weight: 500;
 	font-family: inherit;
 }
+
+.org-timestamp a {
+	text-decoration: none;
+	color: var(--text-normal) !important;
+	font-weight: 300;
+	transition: background 0.2s;
+}
+
+.org-timestamp a:hover {
+	text-decoration: none !important;
+	background: #e0e0e0;
+	border-radius: 2px;
+}

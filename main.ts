@@ -83,6 +83,14 @@ function modifyTimeUnderCursor(
 	}
 }
 
+function insertTextAndMoveCursor(editor: Editor, text: string) {
+	const cursor = editor.getCursor();
+	editor.replaceRange(text, cursor);
+	editor.setCursor(
+		editor.offsetToPos(editor.posToOffset(cursor) + text.length)
+	);
+}
+
 export default class MyPlugin extends Plugin {
 	settings: MyPluginSettings;
 
@@ -90,7 +98,7 @@ export default class MyPlugin extends Plugin {
 		await this.loadSettings();
 		this.addCommand({
 			id: "insert-timestamp",
-			name: "Insert timestamp",
+			name: "Insert timestamp without day link",
 			editorCallback: (editor: Editor, view: MarkdownView) => {
 				// generate a timestamp in the format <2025-06-01 Sat 09:58>
 				// https://moment.github.io/luxon/#/formatting?id=table-of-tokens
@@ -98,13 +106,20 @@ export default class MyPlugin extends Plugin {
 				// 	"<yyyy-MM-dd EEE HH:mm>"
 				// );
 				const timestamp = dayjs().format("<YYYY-MM-DD ddd HH:mm>");
-				const cursor = editor.getCursor();
-				editor.replaceRange(timestamp, cursor);
-				editor.setCursor(
-					editor.offsetToPos(
-						editor.posToOffset(cursor) + timestamp.length
-					)
-				);
+				insertTextAndMoveCursor(editor, timestamp);
+			},
+		});
+		this.addCommand({
+			id: "insert-timestamp-linked",
+			name: "Insert timestamp with day link",
+			editorCallback: (editor: Editor, view: MarkdownView) => {
+				// generate a timestamp in the format <2025-06-01 Sat 09:58>
+				// https://moment.github.io/luxon/#/formatting?id=table-of-tokens
+				// const timestamp = DateTime.now().toFormat(
+				// 	"<yyyy-MM-dd EEE HH:mm>"
+				// );
+				const timestamp = dayjs().format("<[[YYYY-MM-DD]] ddd HH:mm>");
+				insertTextAndMoveCursor(editor, timestamp);
 			},
 		});
 		this.addCommand({
@@ -131,18 +146,24 @@ export default class MyPlugin extends Plugin {
 		this.registerMarkdownPostProcessor((el, ctx) => {
 			// https://orgmode.org/manual/Timestamps.html
 			// Regex to match <2025-06-01 Sat 09:58> or &lt;2025-06-01 Sat 09:58&gt;
+			// ALSO: linked date with a href `<<a data-href="2025-06-02" href="2025-06-02" class="internal-link" target="_blank" rel="noopener nofollow">2025-06-02</a> Mon 10:00-10:35>`
+			// or the bare date string `<2025-06-02 Mon 10:00-10:35>`
 			// `(?:...` is a non-capturing group, so it won't be included in the match result.
 			const regex =
-				/(?:<|&lt;)(\d{4}-\d{2}-\d{2} \w{3}) (\d{2}:\d{2}(?:-\d{2}:\d{2})?)(?:>|&gt;)/g;
+				/(?:<|&lt;)(<a [^>]+>)?(\d{4}-\d{2}-\d{2})(<\/a>)? (\w{3}) (\d{2}:\d{2}(?:-\d{2}:\d{2})?)(?:>|&gt;)/g;
 
 			for (const node of Array.from(
 				el.querySelectorAll("span, p, li, h1, h2, h3, h4, h5, h6")
 			)) {
 				node.innerHTML = node.innerHTML.replace(
 					regex,
-					(_match, date, time) => {
+					(_match, aopen, date, aclose, day, time) => {
 						// Wrap timestamp, drop the < or &lt; and > or &gt;
-						return `<span class="org-timestamp">${date} <span class="org-timestamp-time">${time}</span></span>`;
+						return `<span class="org-timestamp">${
+							aopen ?? ""
+						}${date}${
+							aclose ?? ""
+						} ${day} <span class="org-timestamp-time">${time}</span></span>`;
 					}
 				);
 			}
