@@ -113,12 +113,12 @@ export default class MyPlugin extends Plugin {
 			id: "insert-timestamp-linked",
 			name: "Insert timestamp with day link",
 			editorCallback: (editor: Editor, view: MarkdownView) => {
-				// generate a timestamp in the format <2025-06-01 Sat 09:58>
-				// https://moment.github.io/luxon/#/formatting?id=table-of-tokens
-				// const timestamp = DateTime.now().toFormat(
-				// 	"<yyyy-MM-dd EEE HH:mm>"
-				// );
-				const timestamp = dayjs().format("<[[YYYY-MM-DD]] ddd HH:mm>");
+				// - generate a timestamp in the format <[[2025-06-01]] Sat 09:58> so it links to the day in question
+				// - dayjs uses [this is escaped] to escape stuff in format string, so I need to escape the opening
+				//   square brackets with more brackets
+				const timestamp = dayjs().format(
+					"<[[][[]YYYY-MM-DD]] ddd HH:mm>"
+				);
 				insertTextAndMoveCursor(editor, timestamp);
 			},
 		});
