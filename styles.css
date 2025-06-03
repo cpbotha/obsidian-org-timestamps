@@ -12,7 +12,8 @@ obsidian-org-timestamps relies on this CSS styling
 	display: inline-block;
 	margin: 0px;
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-	font-size: 1em;
+	/* make the timestamp slightly smaller to compensate for its visual prominence */
+	font-size: 0.86em;
 	font-family: inherit;
 	font-weight: 300;
 }
