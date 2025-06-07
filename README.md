@@ -4,7 +4,11 @@ Render pretty org-mode(rn) timestamps in Obsidian
 
 ## Features
 
-- Pretty timestamps
+org-mode style timestamps are nicely rendered, see example below
+
+Markdown source             |  Rendered with org-timestamps
+:-------------------------:|:-------------------------:
+![](./screenshots/obsidian-org-timestamps-source.png) | ![](./screenshots/obsidian-org-timestamps-preview.png)
 
 ## Quickstart
 
