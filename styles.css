@@ -29,10 +29,10 @@ obsidian-org-timestamps relies on this CSS styling
 }
 
 .org-timestamp a {
-	text-decoration: none;
+	text-decoration: none !important;
 	color: var(--text-normal) !important;
 	font-weight: 300;
-	transition: background 0.2s;
+	transition: background 0.3s;
 }
 
 .org-timestamp a:hover {
