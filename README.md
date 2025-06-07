@@ -8,11 +8,13 @@ Render pretty org-mode(rn) timestamps in Obsidian
 
 ## Quickstart
 
-- [Install plugin via community plugins](https://obsidian.md/plugins?id=ai-chat-as-md)
+This plugin has not yet been published as a community plugin. When it does, you'll be able to install from there. Until then, see the next section on how to install manually.
+
+<!-- [Install plugin via community plugins](https://obsidian.md/plugins?id=org-timestamps) -->
 
 ## Manually installing the plugin
 
-- Copy over `main.js`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/org-timestamps/`.
+Download `main.js`, `manifest.json` from [latest release on github](https://github.com/cpbotha/obsidian-org-timestamps/releases/latest) to your vault `VaultFolder/.obsidian/plugins/org-timestamps/`.
 
 ## Dev quickstart
 
