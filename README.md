@@ -12,7 +12,7 @@ Render pretty org-mode(rn) timestamps in Obsidian
 
 ## Manually installing the plugin
 
-- Copy over `main.js`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+- Copy over `main.js`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/org-timestamps/`.
 
 ## Dev quickstart
 
