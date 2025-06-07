@@ -153,10 +153,11 @@ export default class MyPlugin extends Plugin {
 			const regex =
 				/(?:<|&lt;)(?:(<a [^>]+>)?(\d{4}-\d{2}-\d{2})(<\/a>)? (\w{3}) )?(\d{2}:\d{2}(?:-\d{2}:\d{2})?)(?:>|&gt;)/g;
 
-			for (const node of Array.from(
-				el.querySelectorAll("span, p, li, h1, h2, h3, h4, h5, h6")
+			for (const node of el.findAll(
+				"span, p, li, h1, h2, h3, h4, h5, h6"
 			)) {
-				node.innerHTML = node.innerHTML.replace(
+				// in this case, the regex strictly limits to timestamps, so we can safely use innerHTML
+				const newHTML = node.innerHTML.replace(
 					regex,
 					(_match, aopen, date, aclose, day, time) => {
 						// Wrap timestamp, drop the < or &lt; and > or &gt;
@@ -167,6 +168,10 @@ export default class MyPlugin extends Plugin {
 						} <span class="org-timestamp-time">${time}</span></span>`;
 					}
 				);
+				// only set the new innerHTML if it has actually changed to avoid unnecessary rerendering
+				if (newHTML !== node.innerHTML) {
+					node.innerHTML = newHTML;
+				}
 			}
 		});
 	}
@@ -187,10 +192,6 @@ export default class MyPlugin extends Plugin {
 }
 
 class SampleModal extends Modal {
-	constructor(app: App) {
-		super(app);
-	}
-
 	onOpen() {
 		const { contentEl } = this;
 		contentEl.setText("Woah!");
